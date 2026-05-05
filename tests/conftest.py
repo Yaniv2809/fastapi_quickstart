@@ -1,7 +1,6 @@
 """Config file for tests."""
 
 import asyncio
-import random
 import typing
 
 import fastapi
@@ -167,8 +166,9 @@ async def async_client(app_fixture: fastapi.FastAPI, event_loop: asyncio.Abstrac
 
 @pytest.fixture(autouse=True)
 def faker_seed() -> None:
-    """Generate random seed for Faker instance."""
-    return random.seed(version=3)
+    """Set deterministic seed for FixtureForge and Faker."""
+    from fixtureforge import set_global_seed
+    set_global_seed(42)
 
 
 @pytest.fixture(scope="session")
